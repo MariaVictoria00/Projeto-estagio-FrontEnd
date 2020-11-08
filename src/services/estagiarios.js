@@ -4,5 +4,8 @@ import {http} from './config'
 export default{
     listar:()=>{
         return http.get('estagiarios')
+    },
+    salvar:(estagiario)=>{
+        return http.post('estagiario',estagiario)
     }
 }

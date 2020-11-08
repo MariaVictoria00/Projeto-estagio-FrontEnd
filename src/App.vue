@@ -8,23 +8,24 @@
     </nav>
 
     <div class="container">
+     
 
-      <form>
+      <form @submit.prevent="salvar">
 
           <label>Nome</label>
-          <input type="text" placeholder="Digite...">
+          <input type="text" placeholder="Digite..." v-model="estagiario.nome">
           <label>Telefone</label>
-          <input type="number" placeholder="Digite..">
+          <input type="number" placeholder="Digite.." v-model="estagiario.telefone">
           <label>E-mail</label>
-          <input type="text" placeholder="Digite..">
+          <input type="text" placeholder="Digite.." v-model="estagiario.email">
           <label>Foto</label>
-          <input type="text" placeholder="url">
+          <input type="text" placeholder="url" v-model="estagiario.foto">
           <label>Comrovante de matricula</label>
-          <input type="text" placeholder="url">
+          <input type="text" placeholder="url" v-model="estagiario.comprovanteDeMatricula">
           <label>Areas de interesse</label>
-          <input type="text" placeholder="Digite..">
+          <input type="text" placeholder="Digite.." v-model="estagiario.areasDeInteresse">
           <label>Areas de dominio</label>
-          <input type="text" placeholder="Digite..">
+          <input type="text" placeholder="Digite.." v-model="estagiario.areasDeDominio">
 
 
           <button class="waves-effect waves-light btn-small">Salvar<i class="material-icons left">save</i></button>
@@ -78,9 +79,20 @@
   
   export default {
 
-    //armazenar dados da api no array
+
     data() {
       return{
+        estagiario:{
+          nome:'',
+          telefone: '',
+          email: '',
+          foto: '',
+          comprovanteDeMatricula: '',
+          areasDeInteresse: '',
+          areasDeDominio: ''
+        },
+
+    //armazenar dados da api no array
         estagiarios:[]
       }
 
@@ -92,6 +104,15 @@
         console.log(resposta.data);
         this.estagiarios=resposta.data;
       })
+    },
+    methods:{
+      salvar(){
+        //chamar api
+        Controle.salvar(this.estagiario).then(resposta =>{
+          alert('Salvo com sucesso');
+          this.estagiario= resposta;
+        })
+      }
     }
   }
 
