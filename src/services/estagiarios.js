@@ -10,5 +10,8 @@ export default{
     },
     atualizar:(estagiario)=>{
         return http.put('estagiario',estagiario)
+    },
+    apagar:(estagiario)=>{
+        return http.delete('estagiario',{data:estagiario})
     }
 }

@@ -61,7 +61,7 @@
             <td>{{estagiario.areasDeDominio}}</td>
             <td>
               <button @click="editar(estagiario)" class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></button>
-              <button class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></button>
+              <button @click="remover(estagiario)" class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></button>
             </td>
 
           </tr>
@@ -135,6 +135,16 @@
 
       editar(estagiario) {
         this.estagiario = estagiario;
+      },
+
+      remover(estagiario) {
+        if(confirm('Deseja remover o estagiario?')) {
+          Controle.apagar(estagiario).then(resposta =>{
+          this.estagiario= resposta;
+          this.listar()
+        })
+        }
+        
       }
       
     }
