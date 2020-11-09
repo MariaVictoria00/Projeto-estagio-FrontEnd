@@ -13,19 +13,19 @@
       <form @submit.prevent="salvar">
 
           <label>Nome</label>
-          <input type="text" placeholder="Digite..." v-model="estagiario.nome">
+          <input  required="" type="text" placeholder="Digite..." v-model="estagiario.nome">
           <label>Telefone</label>
-          <input type="number" placeholder="Digite.." v-model="estagiario.telefone">
+          <input required="" maxlength="12" type="tel" placeholder="Digite.." v-model="estagiario.telefone">
           <label>E-mail</label>
-          <input type="text" placeholder="Digite.." v-model="estagiario.email">
+          <input required="" type="text" placeholder="Digite.." v-model="estagiario.email">
           <label>Foto</label>
-          <input type="text" placeholder="url" v-model="estagiario.foto">
+          <input required="" type="text" placeholder="url" v-model="estagiario.foto">
           <label>Comrovante de matricula</label>
-          <input type="text" placeholder="url" v-model="estagiario.comprovanteDeMatricula">
+          <input required="" type="text" placeholder="url" v-model="estagiario.comprovanteDeMatricula">
           <label>Areas de interesse</label>
-          <input type="text" placeholder="Digite.." v-model="estagiario.areasDeInteresse">
+          <input required="" type="text" placeholder="Digite.." v-model="estagiario.areasDeInteresse">
           <label>Areas de dominio</label>
-          <input type="text" placeholder="Digite.." v-model="estagiario.areasDeDominio">
+          <input required="" type="text" placeholder="Digite.." v-model="estagiario.areasDeDominio">
 
 
           <button class="waves-effect waves-light btn-small">Salvar<i class="material-icons left">save</i></button>
@@ -100,19 +100,28 @@
     
     //metodo que contem a api
     mounted(){
-      Controle.listar().then(resposta =>{
-        console.log(resposta.data);
-        this.estagiarios=resposta.data;
-      })
+      this.listar()
+     
     },
     methods:{
+      
+      //atualizar a pagina remotamente
+      listar(){
+         Controle.listar().then(resposta =>{
+         this.estagiarios=resposta.data; 
+       })
+      },
+
       salvar(){
         //chamar api
         Controle.salvar(this.estagiario).then(resposta =>{
+          this.estagiario = {}  //limpar campos ao salvar 
           alert('Salvo com sucesso');
           this.estagiario= resposta;
+          this.listar()
         })
       }
+      
     }
   }
 
