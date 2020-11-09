@@ -60,7 +60,7 @@
             <td>{{estagiario.areasDeInteresse}}</td>
             <td>{{estagiario.areasDeDominio}}</td>
             <td>
-              <button class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></button>
+              <button @click="editar(estagiario)" class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></button>
               <button class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></button>
             </td>
 
@@ -83,6 +83,7 @@
     data() {
       return{
         estagiario:{
+          id:'',
           nome:'',
           telefone: '',
           email: '',
@@ -113,13 +114,27 @@
       },
 
       salvar(){
-        //chamar api
-        Controle.salvar(this.estagiario).then(resposta =>{
+        if(!this.estagiario.id){
+         //chamar api
+         Controle.salvar(this.estagiario).then(resposta =>{
           this.estagiario = {}  //limpar campos ao salvar 
           alert('Salvo com sucesso');
           this.estagiario= resposta;
           this.listar()
         })
+      }else{
+         Controle.atualizar(this.estagiario).then(resposta =>{
+          this.estagiario = {}  //limpar campos ao salvar 
+          alert('Atualizado com sucesso');
+          this.estagiario= resposta;
+          this.listar()
+        })
+      }
+       
+      },
+
+      editar(estagiario) {
+        this.estagiario = estagiario;
       }
       
     }

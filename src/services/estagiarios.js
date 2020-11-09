@@ -7,5 +7,8 @@ export default{
     },
     salvar:(estagiario)=>{
         return http.post('estagiario',estagiario)
+    },
+    atualizar:(estagiario)=>{
+        return http.put('estagiario',estagiario)
     }
 }
