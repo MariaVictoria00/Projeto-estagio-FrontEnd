@@ -1,38 +1,39 @@
 <template>
-  <div id="app">
+  <div id="app" >
 
     <nav>
-      <div class="nav-wrapper pink darken-1">
+      <div class="nav-wrapper pink darken-1 col s12 m12 l12">
         <a href="#" class="brand-logo center">Estagiarios</a>
       </div>
     </nav>
+    
 
-    <div class="container">
-     
 
-      <form @submit.prevent="salvar">
+    <div class="container col s12 m12 l12">
+      {{estagiario.nome}}
+
+      <form class="container col s12 m12 l12" @submit.prevent="salvar">
 
           <label>Nome</label>
-          <input  required="" type="text" placeholder="Digite..." v-model="estagiario.nome">
+          <input class="col s12 m12 l12"  required="" type="text" placeholder="Digite..." v-model="estagiario.nome">
           <label>Telefone</label>
-          <input required="" maxlength="12" type="tel" placeholder="Digite.." v-model="estagiario.telefone">
+          <input class="col s12 m12 l12" required="" maxlength="12" type="tel" placeholder="Digite.." v-model="estagiario.telefone">
           <label>E-mail</label>
-          <input required="" type="text" placeholder="Digite.." v-model="estagiario.email">
-          <label>Foto</label>
-          <input required="" type="text" placeholder="url" v-model="estagiario.foto">
-          <label>Comrovante de matricula</label>
-          <input required="" type="text" placeholder="url" v-model="estagiario.comprovanteDeMatricula">
+          <input class="col s12 m12 l12"  required="" type="text" placeholder="Digite.." v-model="estagiario.email">
+          <label> Foto</label>   
+          <input class="col s12 m12 l12"  required="" type="file" accept="image/*" placeholder="url" width:1rem estagiario.foto>
+          <label>Comprovante de matricula</label>
+          <input class="col s12 m12 l12"  required="" type="file" placeholder="url" estagiario.comprovanteDeMatricula> 
           <label>Areas de interesse</label>
-          <input required="" type="text" placeholder="Digite.." v-model="estagiario.areasDeInteresse">
+          <input class="col s12 m12 l12" required="" type="text" placeholder="Digite.." v-model="estagiario.areasDeInteresse">
           <label>Areas de dominio</label>
-          <input required="" type="text" placeholder="Digite.." v-model="estagiario.areasDeDominio">
+          <input class="col s12 m12 l12"  required="" type="text" placeholder="Digite.." v-model="estagiario.areasDeDominio">
 
 
           <button class="waves-effect waves-light btn-small">Salvar<i class="material-icons left">save</i></button>
-
       </form>
 
-      <table>
+      <table class="responsive-table">
 
         <thead>
 
@@ -52,13 +53,13 @@
 
           <tr v-for="estagiario of estagiarios" :key="estagiario.id">
 
-            <td>{{estagiario.nome}}</td>
-            <td>{{estagiario.telefone}}</td>
-            <td>{{estagiario.email}}</td>
-            <td>{{estagiario.foto}}</td>
-            <td>{{estagiario.comprovanteDeMatricula}}</td>
-            <td>{{estagiario.areasDeInteresse}}</td>
-            <td>{{estagiario.areasDeDominio}}</td>
+            <td>{{estagiario.nome | truncate(6)}}</td>
+            <td>{{estagiario.telefone | truncate(6) }}</td>
+            <td>{{estagiario.email | truncate(6) }}</td>
+            <td>{{estagiario.foto | truncate(6) }}</td>
+            <td>{{estagiario.comprovanteDeMatricula | truncate(6) }}</td>
+            <td>{{estagiario.areasDeInteresse | truncate(6) }}</td>
+            <td>{{estagiario.areasDeDominio | truncate(6) }}</td>
             <td>
               <button @click="editar(estagiario)" class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></button>
               <button @click="remover(estagiario)" class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></button>
@@ -75,11 +76,10 @@
   </div>
 </template>
 <script>
+ 
  import Controle from './services/estagiarios'
   
-  export default {
-
-
+  export default{
     data() {
       return{
         estagiario:{
@@ -105,7 +105,7 @@
      
     },
     methods:{
-      
+     
       //atualizar a pagina remotamente
       listar(){
          Controle.listar().then(resposta =>{
@@ -145,13 +145,60 @@
         })
         }
         
-      }
+      },
       
+      
+      
+    },
+    filters:{
+      truncate:function(str, length){
+        var output=str;
+        if(output.length>length){
+          output=output.substring(0,length)+'...';
+        }
+          return output;
+    },
     }
+
   }
+
+  
 
 </script>
 
+
 <style>
+html{
+overflow-y:auto;
+}
+
+/* ajustando a label e input do formulário*/
+label{
+  display: block;
+}
+input {
+    padding: 100px 100px;
+}
+input[type=file] {
+    /* width: 100%; */
+    max-width: 50%;
+    padding: 12px 0px;
+    margin: 0px 0px 0px 0px; 
+    box-sizing: border-box;
+    font-size: 10;  
+    
+}
+/* botao de upload */
+ .container {
+  padding-top: 30px;
+  font-size:12px;
+  white-space: 12px;
+  
+ }
+
+
+
+
+
 
 </style>
